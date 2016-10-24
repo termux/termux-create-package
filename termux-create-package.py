@@ -10,7 +10,7 @@ if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	  + '  "version": "0.1",\n'
 	  + '  "arch": "all",\n'
 	  + '  "maintainer": "@MyGithubNick",\n'
-	  + '  "description": "This is a hello world package,"\n'
+	  + '  "description": "This is a hello world package",\n'
 	  + '  "depends": ["python", "vim"],\n'
 	  + '  "files" : {\n'
 	  + '    "hello-world.py": "bin/hello-world",\n'
