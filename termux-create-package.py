@@ -11,16 +11,20 @@ if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	  + '  "arch": "all",\n'
 	  + '  "maintainer": "@MyGithubNick",\n'
 	  + '  "description": "This is a hello world package",\n'
+	  + '  "homepage": "https://example.com",\n'
 	  + '  "depends": ["python", "vim"],\n'
+	  + '  "provides": ["vi"],\n'
+	  + '  "conflicts": ["vim-python-git"],\n'
 	  + '  "files" : {\n'
 	  + '    "hello-world.py": "bin/hello-world",\n'
 	  + '    "hello-world.1": "usr/share/man/man1/hello-world.1"\n'
 	  + '  }\n'
 	  + '}\n'
-	  + 'The "maintainer", "description" and "depends" properties are all optional.\n'
-	  + 'The "arch" property defaults to "all" (that is, a platform-independent package not containing native code).\n'
-	  + 'Run "uname -m" to find out arch name if creating native code inside Termux.\n'
-	  + 'The resulting .deb file can be installed by Termux users with:\n'
+	  + 'The "maintainer", "description", "homepage", "depends", "provides" and\n'
+	  + '"conflicts" properties are all optional.  The "arch" property defaults to "all"\n'
+	  + '(that is, a platform-independent package not containing native code).  Run\n'
+	  + '"uname -m" to find out arch name if creating native code inside Termux.  The\n'
+	  + 'resulting .deb file can be installed by Termux users with:\n'
 	  + '  apt install ./package-file.deb')
 
 	sys.exit(1)
@@ -46,8 +50,17 @@ if 'maintainer' in manifest: package_maintainer = manifest['maintainer']
 package_description = 'No description'
 if 'description' in manifest: package_description = manifest['description']
 
+package_homepage = 'No homepage'
+if 'homepage' in manifest: package_homepage = manifest['homepage']
+
 package_deps = []
 if 'depends' in manifest: package_deps = manifest['depends']
+
+package_provides = []
+if 'provides' in manifest: package_provides = manifest['provides']
+
+package_conflicts = []
+if 'conflicts' in manifest: package_conflicts = manifest['conflicts']
 
 output_debfile_name = package_name + '_' + package_version + '_' + package_arch + '.deb'
 print('Building ' + output_debfile_name)
@@ -61,11 +74,28 @@ with tarfile.open(package_tmp_directory.name + '/control.tar.xz', mode = 'w:xz')
 	contents += 'Architecture: ' + package_arch + "\n"
 	contents += 'Maintainer: ' + package_maintainer + "\n"
 	contents += 'Description: ' + package_description + "\n"
+	contents += 'Homepage: ' + package_homepage + "\n"
 
 	if len(package_deps) > 0:
 		contents += 'Depends: '
 		delim = ''
-		for d in package_deps: 
+		for d in package_deps:
+			contents += delim + d
+			delim = ','
+		contents += '\n'
+
+	if len(package_provides) > 0:
+		contents += 'Provides: '
+		delim = ''
+		for d in package_provides:
+			contents += delim + d
+			delim = ','
+		contents += '\n'
+
+	if len(package_conflicts) > 0:
+		contents += 'Conflicts: '
+		delim = ''
+		for d in package_conflicts:
 			contents += delim + d
 			delim = ','
 		contents += '\n'
