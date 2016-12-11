@@ -11,6 +11,7 @@ if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	  + '  "arch": "all",\n'
 	  + '  "maintainer": "@MyGithubNick",\n'
 	  + '  "description": "This is a hello world package",\n'
+	  + '  "homepage": "https://example.com",\n'
 	  + '  "depends": ["python", "vim"],\n'
 	  + '  "provides": ["vi"],\n'
 	  + '  "files" : {\n'
@@ -18,8 +19,8 @@ if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	  + '    "hello-world.1": "usr/share/man/man1/hello-world.1"\n'
 	  + '  }\n'
 	  + '}\n'
-	  + 'The "maintainer", "description", "depends" and "provides" properties are all\n'
-	  + 'optional.  The "arch" property defaults to "all" (that is, a platform-\n'
+	  + 'The "maintainer", "description", "homepage", "depends" and "provides" properties\n'
+	  + 'are all optional.  The "arch" property defaults to "all" (that is, a platform-\n'
 	  + 'independent package not containing native code).  Run "uname -m" to find out\n'
 	  + 'arch name if creating native code inside Termux.  The resulting .deb file can\n'
 	  + 'be installed by Termux users with:\n'
@@ -48,6 +49,9 @@ if 'maintainer' in manifest: package_maintainer = manifest['maintainer']
 package_description = 'No description'
 if 'description' in manifest: package_description = manifest['description']
 
+package_homepage = 'No homepage'
+if 'homepage' in manifest: package_homepage = manifest['homepage']
+
 package_deps = []
 if 'depends' in manifest: package_deps = manifest['depends']
 
@@ -66,6 +70,7 @@ with tarfile.open(package_tmp_directory.name + '/control.tar.xz', mode = 'w:xz')
 	contents += 'Architecture: ' + package_arch + "\n"
 	contents += 'Maintainer: ' + package_maintainer + "\n"
 	contents += 'Description: ' + package_description + "\n"
+	contents += 'Homepage: ' + package_homepage + "\n"
 
 	if len(package_deps) > 0:
 		contents += 'Depends: '
