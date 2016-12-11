@@ -14,16 +14,17 @@ if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	  + '  "homepage": "https://example.com",\n'
 	  + '  "depends": ["python", "vim"],\n'
 	  + '  "provides": ["vi"],\n'
+	  + '  "conflicts": ["vim-python-git"],\n'
 	  + '  "files" : {\n'
 	  + '    "hello-world.py": "bin/hello-world",\n'
 	  + '    "hello-world.1": "usr/share/man/man1/hello-world.1"\n'
 	  + '  }\n'
 	  + '}\n'
-	  + 'The "maintainer", "description", "homepage", "depends" and "provides" properties\n'
-	  + 'are all optional.  The "arch" property defaults to "all" (that is, a platform-\n'
-	  + 'independent package not containing native code).  Run "uname -m" to find out\n'
-	  + 'arch name if creating native code inside Termux.  The resulting .deb file can\n'
-	  + 'be installed by Termux users with:\n'
+	  + 'The "maintainer", "description", "homepage", "depends", "provides" and\n'
+	  + '"conflicts" properties are all optional.  The "arch" property defaults to "all"\n'
+	  + '(that is, a platform-independent package not containing native code).  Run\n'
+	  + '"uname -m" to find out arch name if creating native code inside Termux.  The\n'
+	  + 'resulting .deb file can be installed by Termux users with:\n'
 	  + '  apt install ./package-file.deb')
 
 	sys.exit(1)
@@ -58,6 +59,9 @@ if 'depends' in manifest: package_deps = manifest['depends']
 package_provides = []
 if 'provides' in manifest: package_provides = manifest['provides']
 
+package_conflicts = []
+if 'conflicts' in manifest: package_conflicts = manifest['conflicts']
+
 output_debfile_name = package_name + '_' + package_version + '_' + package_arch + '.deb'
 print('Building ' + output_debfile_name)
 
@@ -84,6 +88,14 @@ with tarfile.open(package_tmp_directory.name + '/control.tar.xz', mode = 'w:xz')
 		contents += 'Provides: '
 		delim = ''
 		for d in package_provides:
+			contents += delim + d
+			delim = ','
+		contents += '\n'
+
+	if len(package_conflicts) > 0:
+		contents += 'Conflicts: '
+		delim = ''
+		for d in package_conflicts:
 			contents += delim + d
 			delim = ','
 		contents += '\n'
