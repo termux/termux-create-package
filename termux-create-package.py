@@ -1,6 +1,20 @@
 #!/usr/bin/env python3
-
-import io, json, os, sys, subprocess, tarfile, tempfile
+try:
+    import io, json, os, sys, subprocess, tarfile, tempfile, platform
+except Exception as error:
+    print("Some modules could not be loaded!")
+    exit()
+	
+if platform.system().lower() == "linux":
+    expath = shutil.which("ls")
+    if "termux" in expath == True:
+        BIN_DIR = 'data/data/com.termux/files/usr/'
+	print("Building package for termux!")
+    else:
+	BIN_DIR = '/usr/'
+	print("Building package for Desktop Linux Debian distros!")
+else:
+    pass
 
 if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
 	print('usage: termux-create-package MANIFEST_JSON_FILE\n'
@@ -111,7 +125,7 @@ with tarfile.open(package_tmp_directory.name + '/control.tar.xz', mode = 'w:xz')
 
 with tarfile.open(package_tmp_directory.name + '/data.tar.xz', mode = 'w:xz') as data_tarfile:
 	for input_file in package_files:
-		output_file = 'data/data/com.termux/files/usr/' + package_files[input_file]
+		output_file = BIN_DIR + package_files[input_file]
 		file_stat = os.stat(input_file)
 
 		info = tarfile.TarInfo(name=output_file)
