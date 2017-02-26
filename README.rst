@@ -15,8 +15,8 @@ Prerequisites
 - A Linux distro based off Debian
 - The Termux app
 - Common sense
-- A script called myproject.py
-- The full path to the script
+- Any executables or scripts ( In this example a python script called myproject.py. )
+- The full path to the script or executable.
 
 Let's start:
 To start the process just execute these commands from your terminal. 
