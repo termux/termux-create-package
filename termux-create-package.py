@@ -1,35 +1,39 @@
 #!/usr/bin/env python3
 
-import io, json, os, sys, subprocess, tarfile, tempfile
+import argparse, io, json, os, sys, subprocess, tarfile, tempfile
 
-if len(sys.argv) != 2 or sys.argv[1].startswith('-'):
-	print('usage: termux-create-package MANIFEST_JSON_FILE\n'
-	  + 'Create a Termux package from a json manifest file. Example of manifest:\n'
-	  + '{\n'
-	  + '  "name": "mypackage",\n'
-	  + '  "version": "0.1",\n'
-	  + '  "arch": "all",\n'
-	  + '  "maintainer": "@MyGithubNick",\n'
-	  + '  "description": "This is a hello world package",\n'
-	  + '  "homepage": "https://example.com",\n'
-	  + '  "depends": ["python", "vim"],\n'
-	  + '  "provides": ["vi"],\n'
-	  + '  "conflicts": ["vim-python-git"],\n'
-	  + '  "files" : {\n'
-	  + '    "hello-world.py": "bin/hello-world",\n'
-	  + '    "hello-world.1": "usr/share/man/man1/hello-world.1"\n'
-	  + '  }\n'
-	  + '}\n'
-	  + 'The "maintainer", "description", "homepage", "depends", "provides" and\n'
-	  + '"conflicts" properties are all optional.  The "arch" property defaults to "all"\n'
-	  + '(that is, a platform-independent package not containing native code).  Run\n'
-	  + '"uname -m" to find out arch name if creating native code inside Termux.  The\n'
-	  + 'resulting .deb file can be installed by Termux users with:\n'
-	  + '  apt install ./package-file.deb')
+PREFIX = "/data/data/com.termux/files/usr/"
 
-	sys.exit(1)
+description = """Create a Termux package from a json manifest file. Example of manifest:
+{
+  "name": "mypackage",
+  "version": "0.1",
+  "arch": "all",
+  "maintainer": "@MyGithubNick",
+  "description": "This is a hello world package",
+  "homepage": "https://example.com",
+  "depends": ["python", "vim"],
+  "provides": ["vi"],
+  "conflicts": ["vim-python-git"],
+  "files" : {
+    "hello-world.py": "bin/hello-world",
+    "hello-world.1": "usr/share/man/man1/hello-world.1"
+  }
+}
+The "maintainer", "description", "homepage", "depends", "provides" and
+"conflicts" properties are all optional.  The "arch" property defaults to "all"
+(that is, a platform-independent package not containing native code).  Run
+"uname -m" to find out arch name if creating native code inside Termux.  The
+resulting .deb file can be installed by Termux users with:
+  apt install ./package-file.deb'"""
 
-manifest_file_path = sys.argv[1]
+parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
+parser.add_argument("manifest")
+parser.add_argument("--prefix", help="set prefix dir (default: " + PREFIX + ")")
+args = parser.parse_args()
+if args.prefix: PREFIX = str(args.prefix)
+
+manifest_file_path = args.manifest
 with open(manifest_file_path) as f: manifest = json.load(f)
 
 for prop in 'name', 'version', 'files':
@@ -111,10 +115,15 @@ with tarfile.open(package_tmp_directory.name + '/control.tar.xz', mode = 'w:xz')
 
 with tarfile.open(package_tmp_directory.name + '/data.tar.xz', mode = 'w:xz') as data_tarfile:
 	for input_file in package_files:
-		output_file = 'data/data/com.termux/files/usr/' + package_files[input_file]
 		file_stat = os.stat(input_file)
 
+		# The tar file path should not start with slash:
+		if PREFIX.startswith('/'): PREFIX = PREFIX[1:]
+		if not PREFIX.endswith('/'): PREFIX += '/'
+
+		output_file = PREFIX + package_files[input_file]
 		info = tarfile.TarInfo(name=output_file)
+
 		info.mode = file_stat.st_mode
 		info.mtime = file_stat.st_mtime
 		info.size = file_stat.st_size
