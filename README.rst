@@ -1,7 +1,12 @@
 termux-create-package
 =====================
 
-A tool to make lightweight `Termux <https://termux.com>`__ DEB packages.
+A tool to create lightweight deb packages.
+
+By default it creates deb files for installation in the
+`Termux <https://termux.com>`__ Linux environment, but by specifying
+e.g. ``--prefix /usr`` a deb file can be created for any .deb-using
+distribution such as Debian or Ubuntu.
 
 Prerequisites
 -------------
@@ -10,8 +15,8 @@ Install it with ``apt install termux-create-package`` to use inside
 Termux.
 
 If you want to run this tool in a non-Termux environment (Linux/macOS),
-run the ``termux-create-package`` script contained in this repository
-after making sure that Python 3 is installed.
+install with ``pip3 install termux-create-package`` after making sure
+that Python 3 is installed.
 
 Usage
 -----
