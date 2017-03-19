@@ -17,7 +17,7 @@ description = """Create a Termux package from a JSON manifest file. Example of m
   "conflicts": ["vim-python-git"],
   "files" : {
     "hello-world.py": "bin/hello-world",
-    "hello-world.1": "usr/share/man/man1/hello-world.1"
+    "hello-world.1": "share/man/man1/hello-world.1"
   }
 }
 The "maintainer", "description", "homepage", "depends", "provides" and "conflicts" fields are all optional.
