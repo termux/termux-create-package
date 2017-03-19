@@ -4,7 +4,7 @@ import argparse, io, json, os, sys, subprocess, tarfile, tempfile
 
 PREFIX = "/data/data/com.termux/files/usr/"
 
-description = """Create a Termux package from a json manifest file. Example of manifest:
+description = """Create a Termux package from a JSON manifest file. Example of manifest:
 {
   "name": "mypackage",
   "version": "0.1",
@@ -20,15 +20,20 @@ description = """Create a Termux package from a json manifest file. Example of m
     "hello-world.1": "usr/share/man/man1/hello-world.1"
   }
 }
-The "maintainer", "description", "homepage", "depends", "provides" and
-"conflicts" properties are all optional.  The "arch" property defaults to "all"
-(that is, a platform-independent package not containing native code).  Run
-"uname -m" to find out arch name if creating native code inside Termux.  The
-resulting .deb file can be installed by Termux users with:
-  apt install ./package-file.deb'"""
+The "maintainer", "description", "homepage", "depends", "provides" and "conflicts" fields are all optional.
+
+The "depends" field should be a comma-separated list of packages that this package depends on. They will be installed automatically when this package is installed using apt.
+
+The "arch" field defaults to "all" (that is, a platform-independent package not containing native code) and can be any of arm/i686/aarch64/x86_64.  Run "uname -m" to find out arch name if building native code inside Termux.
+
+The "files" map is keyed from paths to files to include (relative to the current directory) while the values contains the paths where the files should end up after installation (relative to $PREFIX).
+
+The resulting .deb file can be installed by Termux users with:
+  apt install ./package-file.deb
+or by hosting it in an apt repository using the termux-apt-repo tool."""
 
 parser = argparse.ArgumentParser(description=description, formatter_class=argparse.RawTextHelpFormatter)
-parser.add_argument("manifest")
+parser.add_argument("manifest", help="a JSON manifest file describing the package")
 parser.add_argument("--prefix", help="set prefix dir (default: " + PREFIX + ")")
 args = parser.parse_args()
 if args.prefix: PREFIX = str(args.prefix)

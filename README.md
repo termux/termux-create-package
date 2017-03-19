@@ -24,8 +24,9 @@ An example manifest file is given below:
   "description": "my description",
   "arch": "all",
   "depends": ["dependency"],
-  "files" :{ 
-    "bin/myproject.py": "bin/myproject"
+  "files" :{
+    "myfile.py": "bin/myfile",
+    "mylib.so": "lib/mylib.so"
   }
 }
 ```
@@ -39,7 +40,7 @@ The fields are as follows:
 - _description_: Optional informative field containing a short description of the package.
 - _depends_: Comma-separated list of packages that this package depends on. Will be installed automatically when this package is installed using `apt`.
 - _arch_: Set to `all` if the package only contains architecture-independent data, or one of arm/i686/aarch64/x86\_64 as appropriate.
-- `files`: Files relative to the manifest file that should be included in the package. At installation time this files will be installed under the `$PREFIX` path in Termux).
+- `files`: Files relative to the manifest file that should be included in the package. The keys are paths (relative to the current directory) to include and the values are paths where the files should end up at installation (relative to the `$PREFIX` path in Termux where everything is installed under).
 
 Run the following command to create a package file named `${name}_${version}_all.deb`:
 
