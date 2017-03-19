@@ -5,13 +5,13 @@ A tool to make lightweight [Termux](https://termux.com) DEB packages.
 
 Prerequisites
 -------------
-If you want to run this tool inside Termux, install it with `apt install termux-create-package`.
+Install it with `apt install termux-create-package` to use inside Termux.
 
 If you want to run this tool in a non-Termux environment (Linux/macOS), run the `termux-create-package` script contained in this repository after making sure that Python 3 is installed.
 
 Usage
 -----
-This tool expects packages to be defined in JSON manifest files. run `termux-create-package -h` for more information.
+This tool expects packages to be defined in JSON manifest files. Run `termux-create-package -h` for more information.
 
 An example manifest file is given below:
 
