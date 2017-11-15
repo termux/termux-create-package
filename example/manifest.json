@@ -1,0 +1,12 @@
+{
+  "name": "hello",
+  "version": "1.0",
+  "homepage": "http://mysite.com",
+  "maintainer": "@mynick",
+  "description": "my description",
+  "arch": "all",
+  "depends": ["python3"],
+  "files" :{
+    "bin/hello.py": "bin/hello"
+  }
+}
