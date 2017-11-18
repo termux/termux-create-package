@@ -114,7 +114,7 @@ class Main:
                 print(str(error))
         elif len(arglist) == 4 and arglist[1] == "build" and arglist[2] == "termux" and os.path.exists(arglist[3]) == True:
             try:
-                inst.debian(arglist[3])
+                inst.termux(arglist[3])
             except Exception as error:
                 print(str(error))
         else:
