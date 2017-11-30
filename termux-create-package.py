@@ -19,6 +19,7 @@ class BuildDEB:
         manifest_file_path = manifest
         with open(manifest_file_path) as f: manifest = json.load(f)
 
+        # Check for required fields:
         for prop in 'name', 'version', 'files':
             if prop not in manifest: sys.exit('Missing mandatory "' + prop + '" property')
 
@@ -51,6 +52,7 @@ class BuildDEB:
         output_debfile_name = package_name + '_' + package_version + '_' + package_arch + '.deb'
         print('Building ' + output_debfile_name)
 
+        # Create intermediate files in a temporary directory
         package_tmp_directory = tempfile.TemporaryDirectory()
         with open(package_tmp_directory.name + '/debian-binary', 'w') as debian_binary: debian_binary.write("2.0\n")
 
@@ -62,6 +64,7 @@ class BuildDEB:
             contents += 'Description: ' + package_description + "\n"
             contents += 'Homepage: ' + package_homepage + "\n"
 
+            # We should probably add "Suggests:", "Breaks:" and some of the other debian keywords as well.
             if len(package_deps) > 0:
                 contents += 'Depends: '
                 delim = ''
@@ -112,6 +115,7 @@ class BuildDEB:
             with open(input_file, 'rb') as f:
                 data_tarfile.addfile(tarinfo=info, fileobj=f)
 
+        # Create the actual .deb using ar:
         subprocess.check_call(['ar', 'r', output_debfile_name,
           package_tmp_directory.name + '/debian-binary',
           package_tmp_directory.name + '/control.tar.xz',
