@@ -5,7 +5,7 @@
   "maintainer": "@mynick",
   "description": "my description",
   "arch": "all",
-  "depends": ["python3"],
+  "depends": ["python"],
   "files" :{
     "bin/hello.py": "bin/hello"
   }
