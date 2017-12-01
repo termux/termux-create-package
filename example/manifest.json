@@ -1,0 +1,16 @@
+{
+	"name": "mypackage",
+	"version": "0.1",
+	"arch": "all",
+	"maintainer": "@MyGithubNick",
+	"description": "This is a hello world package",
+	"homepage": "https://example.com",
+	"depends": ["python", "vim"],
+	"provides": ["vi"],
+	"conflicts": ["vim-python-git"],
+	"files" : {
+		"hello-world.py": "bin/hello-world",
+		"hello-world.1": "share/man/man1/hello-world.1"
+	}
+}
+
