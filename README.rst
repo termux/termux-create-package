@@ -66,7 +66,8 @@ The fields are as follows:
 Run the following command to create a package file named
 ``${name}_${version}_all.deb``::
 
-    $ termux-create-package manifest.json
+    [TERMUX] $ termux-create-package.py build termux manifest.json
+    [DEBIAN] $ termux-create-package.py build debian manifest.json
 
 This can then be installed in Termux using the command::
 
