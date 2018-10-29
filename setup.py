@@ -7,7 +7,7 @@ def readme():
         return f.read()
 setup(
     name = 'termux-create-package',
-    version = '0.4',
+    version = '0.7',
     license = 'MIT',
     description = 'Lightweight tool for creating deb packages',
     long_description = readme(),
