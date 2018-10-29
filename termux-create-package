@@ -56,7 +56,7 @@ def write_control_tar(tar_path, manifest):
     file_size = control_file.tell()
     control_file.seek(0)
 
-    info = tarfile.TarInfo(name="control")
+    info = tarfile.TarInfo(name="./control")
     info.size = file_size
     with tarfile.open(tar_path, mode='w:xz') as control_tarfile:
         control_tarfile.addfile(tarinfo=info, fileobj=control_file)
