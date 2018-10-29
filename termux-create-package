@@ -65,22 +65,8 @@ def write_data_tar(tar_path, installation_prefix, package_files):
     "Create a data.tar.xz from the specified package files."
     with tarfile.open(tar_path, mode='w:xz') as data_tarfile:
         for input_file_path in package_files:
-            file_stat = os.stat(input_file_path)
-
-            # The tar file path should not start with slash:
-            if installation_prefix.startswith('/'):
-                installation_prefix = installation_prefix[1:]
-            if not installation_prefix.endswith('/'):
-                installation_prefix += '/'
-
             output_file = installation_prefix + package_files[input_file_path]
-            info = tarfile.TarInfo(name=output_file)
-
-            info.mode = file_stat.st_mode
-            info.mtime = file_stat.st_mtime
-            info.size = file_stat.st_size
-            with open(input_file_path, 'rb') as input_file:
-                data_tarfile.addfile(tarinfo=info, fileobj=input_file)
+            data_tarfile.add(input_file_path, arcname=output_file, recursive=False)
 
 def create_debfile(debfile_output, directory):
     "Create a debfile from a directory containing control and data tar files."
