@@ -8,7 +8,7 @@ def readme():
 setup(
     name = 'termux-create-package',
     version = '0.7',
-    license = 'MIT',
+    license = 'Apache License 2.0',
     description = 'Lightweight tool for creating deb packages',
     long_description = readme(),
     author = 'Fredrik Fornwall',
