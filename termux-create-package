@@ -58,15 +58,15 @@ def write_control_tar(tar_path, manifest):
 
     info = tarfile.TarInfo(name="./control")
     info.size = file_size
-    with tarfile.open(tar_path, mode='w:xz') as control_tarfile:
+    with tarfile.open(tar_path, mode='w:xz', format=tarfile.GNU_FORMAT) as control_tarfile:
         control_tarfile.addfile(tarinfo=info, fileobj=control_file)
 
 def write_data_tar(tar_path, installation_prefix, package_files):
     "Create a data.tar.xz from the specified package files."
-    with tarfile.open(tar_path, mode='w:xz') as data_tarfile:
+    with tarfile.open(tar_path, mode='w:xz', format=tarfile.GNU_FORMAT) as data_tarfile:
         for input_file_path in package_files:
             output_file = installation_prefix + package_files[input_file_path]
-            data_tarfile.add(input_file_path, arcname=output_file, recursive=False)
+            data_tarfile.add(input_file_path, arcname=output_file, recursive=True)
 
 def create_debfile(debfile_output, directory):
     "Create a debfile from a directory containing control and data tar files."
