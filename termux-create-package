@@ -29,11 +29,13 @@ def setup_default_manifest_values(manifest):
     set_default_value(manifest, 'arch', 'all')
     set_default_value(manifest, 'conflicts', [])
     set_default_value(manifest, 'depends', [])
+    set_default_value(manifest, 'recommends', [])
+    set_default_value(manifest, 'suggests', [])
     set_default_value(manifest, 'description', 'No description')
     set_default_value(manifest, 'maintainer', 'None')
     set_default_value(manifest, 'provides', [])
 
-def write_control_tar(tar_path, manifest):
+def write_control_tar(tar_path, manifest, debscripts):
     "Create a data.tar.xz from the specified manifest."
     contents = 'Package: ' + manifest['name'] + "\n"
     contents += 'Version: ' + manifest['version'] + "\n"
@@ -46,6 +48,10 @@ def write_control_tar(tar_path, manifest):
 
     if manifest['depends']:
         contents += 'Depends: ' + ','.join(manifest['depends']) + '\n'
+    if manifest['recommends']:
+        contents += 'Recommends: ' + ','.join(manifest['recommends']) + '\n'
+    if manifest['suggests']:
+        contents += 'Suggests: ' + ','.join(manifest['suggests']) + '\n'
     if manifest['provides']:
         contents += 'Provides: ' + ','.join(manifest['provides']) + '\n'
     if manifest['conflicts']:
@@ -60,6 +66,8 @@ def write_control_tar(tar_path, manifest):
     info.size = file_size
     with tarfile.open(tar_path, mode='w:xz', format=tarfile.GNU_FORMAT) as control_tarfile:
         control_tarfile.addfile(tarinfo=info, fileobj=control_file)
+        for debscript in debscripts:
+            if os.path.isfile(debscript): control_tarfile.add(debscript)
 
 def write_data_tar(tar_path, installation_prefix, package_files):
     "Create a data.tar.xz from the specified package files."
@@ -84,7 +92,9 @@ DESCRIPTION = """Create a Termux package from a JSON manifest file. Example of m
   "maintainer": "@MyGithubNick",
   "description": "This is a hello world package",
   "homepage": "https://example.com",
-  "depends": ["python", "vim"],
+  "depends": ["python"],
+  "recommends": ["vim"],
+  "suggests": ["vim-python"],
   "provides": ["vi"],
   "conflicts": ["vim-python-git"],
   "files" : {
@@ -92,13 +102,15 @@ DESCRIPTION = """Create a Termux package from a JSON manifest file. Example of m
     "hello-world.1": "share/man/man1/hello-world.1"
   }
 }
-The "maintainer", "description", "homepage", "depends", "provides" and "conflicts" fields are all optional.
+The "maintainer", "description", "homepage", "depends", "recommends", "suggests", "provides" and "conflicts" fields are all optional.
 
-The "depends" field should be a comma-separated list of packages that this package depends on. They will be installed automatically when this package is installed using apt.
+The "depends", "recommends", and "suggests" fields should be a comma-separated list of packages that this package may depends on. Unlike "suggests", "depends" and "recommends" will be installed automatically when this package is installed using apt.
 
 The "arch" field defaults to "all" (that is, a platform-independent package not containing native code) and can be any of arm/i686/aarch64/x86_64.  Run "uname -m" to find out arch name if building native code inside Termux.
 
 The "files" map is keyed from paths to files to include (relative to the current directory) while the values contains the paths where the files should end up after installation (relative to $PREFIX).
+
+Existing debscripts named "preinst", "postinst", "prerm", and "postrm" will be automatically included and executed upon installation and removing. They should exist within the same directory as the manifest.
 
 The resulting .deb file can be installed by Termux users with:
   apt install ./package-file.deb
@@ -118,6 +130,14 @@ def main(argv):
         installation_prefix = str(args.prefix)
 
     manifest_file_path = args.manifest
+    manifest_dirname = os.path.dirname(manifest_file_path)
+
+    debscripts = [
+        os.path.join(manifest_dirname, 'preinst'),
+        os.path.join(manifest_dirname, 'postinst'),
+        os.path.join(manifest_dirname, 'prerm'),
+        os.path.join(manifest_dirname, 'postrm')
+    ]
 
     with open(manifest_file_path, 'r') as manifest_file:
         manifest = json.load(manifest_file)
@@ -136,7 +156,7 @@ def main(argv):
     with open(package_tmp_directory.name + '/debian-binary', 'w') as debian_binary:
         debian_binary.write("2.0\n")
 
-    write_control_tar(package_tmp_directory.name + '/control.tar.xz', manifest)
+    write_control_tar(package_tmp_directory.name + '/control.tar.xz', manifest, debscripts)
     write_data_tar(package_tmp_directory.name + '/data.tar.xz', installation_prefix, package_files)
     create_debfile(output_debfile_name, package_tmp_directory.name)
 
