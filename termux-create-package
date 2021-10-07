@@ -42,7 +42,7 @@ Optional debscripts named "preinst", "postinst", "prerm", and "postrm" will be a
 
 The resulting .deb file can be installed by Termux users with:
   apt install ./package-file.deb
-or by hosting it in an apt repository using the termux-apt-repo tool."""
+or by hosting it in an  repository using the termux-apt-repo tool."""
 
 def set_default_manifest_values(manifest):
     "Setup default values in a package manifest."
