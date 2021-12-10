@@ -1,0 +1,58 @@
+control:
+    Package: goodbye-world
+    Version: 0.1.0
+    Architecture: all
+    Maintainer: GithubNick <GithubNick@gmail.com>
+    Depends: python3 (>= 3.0)
+    Homepage: https://www.smbc-comics.com/comic/goodbye
+    Description: |-
+        This is the goodbye world package
+         It is just an example for termux-create-package
+         .
+         It is just prints 'Goodbye cruel world.'
+
+installation_prefix: /usr
+deb_dir: build
+control_files_dir: control
+
+data_files:
+    bin/goodbye-world.1:
+        source: src/goodbye-world.py
+        symlink_destinations: [ bin/goodbye-world ]
+
+    bin/goodbye-world.sym:
+        source: src/goodbye-world.sym
+        source_readlink: true
+
+    /opt/goodbye-world/cache:
+        source: 
+        perm: 700
+        set_parent_perm : true
+
+    /opt/goodbye-world/goodbye-world:
+        source: src/goodbye-world.py
+        perm: 6700
+        owner_uid: 65534
+        owner_uname: nobody
+        owner_gid: 65534
+        owner_gname: nogroup
+
+    /opt/goodbye-world/goodbye-world.1:
+        source: src/goodbye-world.py
+        ignore: true
+
+    /opt/goodbye-world/goodbye-world.2:
+        source: src/goodbye-world.no_exist
+        ignore_if_no_exist: true
+
+    share/man/man1/goodbye-world.1:
+        source: doc/goodbye-world.1
+
+    share/doc/goodbye-world/examples:
+        source: doc/examples
+        source_recurse: true
+
+    etc/goodbye-world/goodbye-world.config:
+        source: config/goodbye-world.config
+        perm: 600
+        is_conffile: true

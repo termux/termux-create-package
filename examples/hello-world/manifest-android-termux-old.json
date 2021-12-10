@@ -1,16 +1,13 @@
 {
-	"name": "mypackage",
-	"version": "0.1",
+	"name": "hello-world",
+	"version": "0.1.0",
 	"arch": "all",
-	"maintainer": "@MyGithubNick",
+	"maintainer": "GithubNick <GithubNick@gmail.com>",
 	"description": "This is a hello world package",
 	"homepage": "https://example.com",
-	"depends": ["python", "vim"],
-	"provides": ["vi"],
-	"conflicts": ["vim-python-git"],
+	"depends": ["python (>= 3.0)", "libandroid-support"],
 	"files" : {
 		"hello-world.py": "bin/hello-world",
 		"hello-world.1": "share/man/man1/hello-world.1"
 	}
 }
-

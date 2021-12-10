@@ -1,0 +1,33 @@
+name: Attach Files To Release
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Set vars
+        id: vars
+        run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
+      - name: Clone repository
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ env.GITHUB_REF }}
+      - name: sha256sums
+        run: |
+          cd ./src
+          sha256sum termux-create-package > sha256sums.txt
+      - name: Attach files to release
+        env:
+          RELEASE_TAG: ${{ steps.vars.outputs.tag }}
+        run: >-
+          hub release edit
+          -m ""
+          -a ./src/termux-create-package
+          -a ./src/sha256sums.txt
+          $RELEASE_TAG
