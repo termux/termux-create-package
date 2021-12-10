@@ -13,8 +13,8 @@ with open("README.md", "r", encoding="utf-8") as file:
 setuptools.setup(
     name="termux-create-package",
     version="0.11",
-    author="Fredrik Fornwall",
-    author_email="fredrik@fornwall.net",
+    author="Agnostic Apollo, Fredrik Fornwall",
+    author_email="agnosticapollo@gmail.com, fredrik@fornwall.net",
     description="Utility to create binary deb packages",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
