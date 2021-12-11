@@ -36,7 +36,7 @@ pkg install termux-create-package
 ### Termux In Android Installation From Source
 
 The `termux-create-package` file should be installed in termux `bin` directory `/data/data/com.termux/files/usr/bin`.  
-It should have `termux` `uid:gid` ownership and have readable `600` permission before it can be sourced.  
+It should have `termux` `uid:gid` ownership and have readable `700` permission before it can be sourced.  
 
 #### Basic
 
@@ -45,8 +45,8 @@ pkg install curl && \
 export install_path="/data/data/com.termux/files/usr/bin" && \
 mkdir -p "$install_path" && \
 curl -L 'https://github.com/termux/termux-create-package/releases/latest/download/termux-create-package' -o "$install_path/termux-create-package" && \
-export owner="$(stat -c "%u" "$install_path")"; chown "$owner:$owner" "$install_path/termux-create-package" && chmod 600 "$install_path/termux-create-package";
-
+export owner="$(stat -c "%u" "$install_path")"; chown "$owner:$owner" "$install_path/termux-create-package" && \
+chmod 700 "$install_path/termux-create-package";
 ```
 
 #### Advance
@@ -72,7 +72,7 @@ mkdir -p "$install_path"
 
         - Master Branch *may be unstable*:  
 
-          `curl -L 'https://github.com/termux/termux-create-package/raw/master/termux-create-package' -o "$install_path/termux-create-package"`  
+          `curl -L 'https://github.com/termux/termux-create-package/raw/master/src/termux-create-package' -o "$install_path/termux-create-package"`  
 
     - Download `termux-create-package` file manually from github to the android download directory and then copy it to install directory.  
 
@@ -89,11 +89,11 @@ mkdir -p "$install_path"
 
     - If you used a `curl` or `cat` to copy the file, then use a non-root termux shell to set ownership and permissions with `chown` and `chmod` commands respectively:  
 
-      `export owner="$(stat -c "%u" "$install_path")"; chown "$owner:$owner" "$install_path/termux-create-package" && chmod 600 "$install_path/termux-create-package";`  
+      `export owner="$(stat -c "%u" "$install_path")"; chown "$owner:$owner" "$install_path/termux-create-package" && chmod 700 "$install_path/termux-create-package";`  
 
     - If you used a root file browser to copy the file, then use `su` to start a root shell to set ownership and permissions with `chown` and `chmod` commands respectively:  
 
-      `export owner="$(stat -c "%u" "$install_path")"; su -c "chown \"$owner:$owner\" \"$install_path/termux-create-package\" && chmod 600 \"$install_path/termux-create-package\"";`  
+      `export owner="$(stat -c "%u" "$install_path")"; su -c "chown \"$owner:$owner\" \"$install_path/termux-create-package\" && chmod 700 \"$install_path/termux-create-package\"";`  
 
     - Or manually set them with your root file browser. You can find `termux` `uid` and `gid` by running the command `id -u` in a non-root termux shell or by checking the properties of the termux `bin` directory from your root file browser.  
 ##
@@ -114,7 +114,7 @@ sudo pip3 install termux-create-package
 ### Linux Distros System Installation From Source
 
 The `termux-create-package` file should be placed in the `/usr/local/bin` directory if you want to install it system-wide for all users as per [FHS 3.0](https://refspecs.linuxfoundation.org/FHS_3.0/fhs/ch04s09.html).  
-It should have readable `600` permission before it can be sourced.  
+It should have readable `755` permission before it can be sourced.  
 
 The install command for `curl`  is for Ubuntu/Debian, it may be different for other distros.  
 
@@ -125,7 +125,7 @@ sudo apt install curl && \
 export install_path="/usr/local/bin" && \
 sudo mkdir -p "$install_path" && \
 sudo curl -L 'https://github.com/termux/termux-create-package/releases/latest/download/termux-create-package' -o "$install_path/termux-create-package" && \
-sudo chmod 600 "$install_path/termux-create-package";
+sudo chmod 755 "$install_path/termux-create-package";
 ```
 
 #### Advance
@@ -152,7 +152,7 @@ mkdir -p "$install_path"
 
         - Master Branch *may be unstable*:  
 
-          `sudo curl -L 'https://github.com/termux/termux-create-package/raw/master/termux-create-package' -o "$install_path/termux-create-package"`  
+          `sudo curl -L 'https://github.com/termux/termux-create-package/raw/master/src/termux-create-package' -o "$install_path/termux-create-package"`  
 
     - Download `termux-create-package` file manually from github to the install directory.  
 
@@ -169,5 +169,5 @@ mkdir -p "$install_path"
 
     - Set ownership and permissions with `chown` and `chmod` commands respectively:  
 
-      `sudo chmod 600 "$install_path/termux-create-package"`  
+      `sudo chmod 755 "$install_path/termux-create-package"`  
 ##
