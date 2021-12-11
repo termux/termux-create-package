@@ -26,7 +26,7 @@ By default it creates binary deb packages for installation in the [Termux](https
 
 - Android version `>= 7.0` using [Termux App].
 - Linux distros.
-- Windows using [cygwin] or [WSL]. *(Untested)*
+- Windows using [cygwin](https://cygwin.com/index.html) or [WSL](https://docs.microsoft.com/en-us/windows/wsl). *(Untested)*
 ##
 
 
@@ -361,8 +361,7 @@ Non `utf-8` characters are not allowed in any paths as per debian policy.
 #### `source`
 
 The source path for the data file from which to read the file that should be added to the package. If source path is an absolute path starting with a forward slash `/`, then that will be used, otherwise it will be considered relative to the current working directory, unless `--files-dir` argument is passed to the script or [`files_dir`](#files-dir) field is set. If the source path is an empty string `""`, then an empty directory will be added at the destination path.
-&nbsp;&nbsp;
-
+##
 
 
 **Optional attribute key/value pairs:**
@@ -411,8 +410,7 @@ The `3` or `4` digit permission octal that should be set to the data file when a
 #### `source_ownership`
 
 The `bool` value for whether source ownership should be used when adding the data file to the deb. If source ownership is not compliant, as per debian policy, then it is ignored and `root:root` ownership is used. Check [`owner_uid`](#owner_uid) and [`owner_uname`](#owner_uname) for details on what is considered valid.
-&nbsp;&nbsp;
-
+##
 
 
 **Optional action key/value pairs:**
@@ -451,8 +449,7 @@ The `bool` value for whether all files under the [`source`](#source) path should
 #### `symlink_destinations`
 
 The `list` value that defines the symlinks that should automatically be created and added to the deb that target the destination data file path. For example adding the entry for the destination file `bin/hello-world.1` and adding `bin/hello-world` to `symlink_destinations` will create a file at `bin/hello-world` that points to `bin/hello-world.1`. This is helpful in defining one or more symlinks dynamically for a file, without having to create symlink files on source system.
-&nbsp;&nbsp;
-
+##
 
 
 If specific permission needs to be set to the parent directory of a file that needs to be installed at the target system, then add an empty `source` entry with the [`perm`](#perm) field set before the entry of the file, optionally with [`set_parent_perm`](#set_parent_perm) set to `true` as well. However, if the directory already exists at the target system, then the permission is unlikely to change, use maintainer scripts instead.
@@ -464,8 +461,7 @@ If specific permission needs to be set to the parent directory of a file that ne
     "share/man/man1/hello-world.1": { "source": "hello-world.1", "perm": "644" }
 }
 ```
-&nbsp;&nbsp;
-
+##
 
 
 **Old `files` format:**
@@ -497,16 +493,15 @@ The `conffiles` can be added to the deb in two ways. Either a predefined file ca
 
 ### Examples
 
-After creating a manifest for the project, run `termux-create-package` command to create deb file.
-
+After creating a manifest for the project, run `termux-create-package </path/to/manifest>` command to create the deb file. Example manifests are provided for both `YAML` and `JSON` in the [`examples`](examples) directory.
 
 - Create a deb package file with defaults: `termux-create-package manifest.yml`
 
-- Create a deb package file with specific installation prefix, files directory, deb directory and deb name: `termux-create-package manifest.json --prefix '/usr' --files-dir '/path/to/files_directory' --deb-dir '/path/to/deb_directory' --deb-name 'some-name.deb'`
+- Create a deb package file with specific installation prefix, files directory, deb directory and deb name: `termux-create-package --prefix '/usr' --files-dir '/path/to/files_directory' --deb-dir '/path/to/deb_directory' --deb-name 'some-name.deb' manifest.json `
 
-- Create example deb with repo source: `cd examples/hello-world; ../../src/termux-create-package -vv manifest-ubuntu.yml`
+- Create example manifest deb from `termux-create-package` repo source: `cd examples/hello-world; ../../src/termux-create-package -vv manifest-ubuntu.yml`
 
-- The deb file can be installed by running `dpkg -i package.deb`. The `dpkg` install command will not install dependencies, you can install them by running `apt-get -f install` afterwards.
+The deb file can be installed by running `dpkg -i package.deb`. The `dpkg` install command will not install dependencies, you can install them by running `apt-get -f install` afterwards.
 
 The deb file can also be added to a custom apt repository created with [`termux-apt-repo`](https://github.com/termux/termux-apt-repo) or any other available tool.
 ##
