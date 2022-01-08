@@ -17,6 +17,11 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+`-`
+
+
+## [v0.12.0] - 2022-01-08
+
 ### Added
 - Add support for `YAML` format for manifests.
 - Add support for custom permissions and ownership of data files.
@@ -109,7 +114,8 @@ All notable changes to this project will be documented in this file.
 ##
 
 
-[unreleased]: https://github.com/termux/termux-create-package/compare/v0.11.0...HEAD
+[unreleased]: https://github.com/termux/termux-create-package/compare/v0.12.0...HEAD
+[v0.12.0]: https://github.com/termux/termux-create-package/compare/v0.11...v0.12.0
 [v0.11]: https://github.com/termux/termux-create-package/compare/v0.10...v0.11
 [v0.10]: https://github.com/termux/termux-create-package/compare/v0.9...v0.10
 [v0.9]: https://github.com/termux/termux-create-package/compare/v0.8...v0.9

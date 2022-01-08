@@ -33,7 +33,7 @@ By default it creates binary deb packages for installation in the [Termux](https
 
 ### Downloads
 
-Latest version is `v0.11`.
+Latest version is `v0.12.0`.
 
 - [GitHub releases](https://github.com/termux/termux-create-package/releases).
 ##

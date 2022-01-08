@@ -44,7 +44,7 @@ except Exception:
     pass
 
 
-VERSION = "0.11"
+VERSION = "0.12.0"
 
 logger = None
 LOG_LEVELS = [logging.CRITICAL, logging.ERROR, logging.WARNING, logging.INFO, logging.DEBUG]
