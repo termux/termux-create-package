@@ -40,27 +40,27 @@ All notable changes to this project will be documented in this file.
 - The `--prefix` must now be an absolute path.
 
 
-## [0.11] - 2021-01-28
+## [v0.11] - 2021-01-28
 
 ### Fixed
 - Fixed version in `setup.py`. ([`289ebc4f`](https://github.com/agnostic-apollo/termux-create-package/commit/289ebc4f))
 
 
-## [0.10] - 2020-07-11
+## [v0.10] - 2020-07-11
 
 ### Changed
 
 - Minimized code structure and fixed minor issue
 
 
-## [0.9] - 2020-07-08
+## [v0.9] - 2020-07-08
 
 ### Added
 
 - Added support for manifest `suggests` and `recommends` fields.
 
 
-## [0.8] - 2020-07-07
+## [v0.8] - 2020-07-07
 
 ### Added
 
@@ -71,37 +71,37 @@ All notable changes to this project will be documented in this file.
 - Set default tar format to `tarfile.GNU_FORMAT` instead of `tarfile.PAX_FORMAT` to prevent corrupted package errors from `dpkg`.
 
 
-## [0.7] - 2018-10-30
+## [v0.7] - 2018-10-30
 
 ### Changed
 - Correct release number in setup.py.
 
 
-## [0.6] - 2018-10-30
+## [v0.6] - 2018-10-30
 
 ### Added
 - Allow for folders and symlinks in package ([`#15`](https://github.com/termux/termux-create-package/pull/15)).
 
 
-## [0.5] - 2018-10-30
+## [v0.5] - 2018-10-30
 
 ### Changed
 - Create `./control` instead of control in tar ([`#14`](https://github.com/termux/termux-create-package/pull/14)).
 
 
-## [0.4] - 2017-03-19
+## [v0.4] - 2017-03-19
 
 ### Added
 - Available for installation using pip.
 
 
-## [0.3] - 2017-03-19
+## [v0.3] - 2017-03-19
 
 ### Added
 - Add support for the `--prefix` option.
 
 
-## [0.2] - 2016-12-11
+## [v0.2] - 2016-12-11
 
 ### Added
 
@@ -110,13 +110,13 @@ All notable changes to this project will be documented in this file.
 
 
 [unreleased]: https://github.com/termux/termux-create-package/compare/v0.11.0...HEAD
-[0.11]: https://github.com/termux/termux-create-package/compare/v0.10...v0.11
-[0.10]: https://github.com/termux/termux-create-package/compare/v0.9...v0.10
-[0.9]: https://github.com/termux/termux-create-package/compare/v0.8...v0.9
-[0.8]: https://github.com/termux/termux-create-package/compare/v0.7...v0.8
-[0.7]: https://github.com/termux/termux-create-package/releases/tag/v0.7
-[0.6]: https://github.com/termux/termux-create-package/releases/tag/v0.6
-[0.5]: https://github.com/termux/termux-create-package/releases/tag/v0.5
-[0.4]: https://github.com/termux/termux-create-package/releases/tag/v0.4
-[0.3]: https://github.com/termux/termux-create-package/releases/tag/v0.3
-[0.2]: https://github.com/termux/termux-create-package/releases/tag/v0.2
+[v0.11]: https://github.com/termux/termux-create-package/compare/v0.10...v0.11
+[v0.10]: https://github.com/termux/termux-create-package/compare/v0.9...v0.10
+[v0.9]: https://github.com/termux/termux-create-package/compare/v0.8...v0.9
+[v0.8]: https://github.com/termux/termux-create-package/compare/v0.7...v0.8
+[v0.7]: https://github.com/termux/termux-create-package/releases/tag/v0.7
+[v0.6]: https://github.com/termux/termux-create-package/releases/tag/v0.6
+[v0.5]: https://github.com/termux/termux-create-package/releases/tag/v0.5
+[v0.4]: https://github.com/termux/termux-create-package/releases/tag/v0.4
+[v0.3]: https://github.com/termux/termux-create-package/releases/tag/v0.3
+[v0.2]: https://github.com/termux/termux-create-package/releases/tag/v0.2
