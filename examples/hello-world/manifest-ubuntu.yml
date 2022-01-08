@@ -1,0 +1,21 @@
+control:
+    Package: hello-world
+    Version: 0.1.0
+    Architecture: all
+    Maintainer: GithubNick <GithubNick@gmail.com>
+    Depends: python3 (>= 3.0), libpython3-stdlib
+    Homepage: https://hello-world.com
+    Description: |-
+        This is the hello world package
+         It is just an example for termux-create-package
+         .
+         It is just prints 'Hello world'
+
+installation_prefix: /usr
+
+data_files:
+    bin/hello-world:
+        source: hello-world.py
+
+    share/man/man1/hello-world.1:
+        source: hello-world.1
