@@ -43,6 +43,8 @@ Latest version is `v0.12.0`.
 ### Installation
 
 Check [INSTALLATION.md](INSTALLATION.md) file for the **install instructions**.
+
+Note that `termux-create-package` is no longer updated on the [`Python Package Index (PyPI)`](https://pypi.org/project/termux-create-package/) and should not be installed with `pip`. Latest version on `PyPi` is `0.7`.
 ##
 
 
