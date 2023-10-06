@@ -27,7 +27,7 @@ setuptools.setup(
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: Apache Software License",
         "Operating System :: OS Independent",
-        "Intended Audience :: Developers"
+        "Intended Audience :: Developers",
         "Topic :: Software Development :: Build Tools"
     ],
     scripts=["src/termux-create-package"],
