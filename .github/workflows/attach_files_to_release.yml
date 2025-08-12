@@ -15,7 +15,7 @@ jobs:
         id: vars
         run: echo ::set-output name=tag::${GITHUB_REF/refs\/tags\//}
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: ${{ env.GITHUB_REF }}
       - name: sha256sums
