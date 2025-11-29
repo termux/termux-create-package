@@ -1574,9 +1574,9 @@ def get_effective_mode(current_mode, symbolic, file_type=None):
             ("o" in clazz and "t" in perm and stat.S_ISVTX)
     else:
         new_mode = new_mode & \
-            ~("u" in clazz and "s" in perm and stat.S_ISUID) & \
-            ~("g" in clazz and "s" in perm and stat.S_ISGID) & \
-            ~("o" in clazz and "t" in perm and stat.S_ISVTX)
+            ~int("u" in clazz and "s" in perm and stat.S_ISUID) & \
+            ~int("g" in clazz and "s" in perm and stat.S_ISGID) & \
+            ~int("o" in clazz and "t" in perm and stat.S_ISVTX)
 
     return new_mode
 
