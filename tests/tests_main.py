@@ -9,7 +9,7 @@ Usage:        Run from repo root.
 """
 
 import os
-import importlib
+import importlib.util
 import sys
 
 

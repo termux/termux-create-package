@@ -34,7 +34,7 @@ import time
 import traceback
 import unicodedata
 
-import importlib
+import importlib.util
 yaml_supported = False
 try:
     if importlib.util.find_spec("ruamel.yaml") is not None:
